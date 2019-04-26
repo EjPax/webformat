@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+
+Route::get('companies/suppliers','CompaniesController@suppliers')->name('companies.suppliers');
+Route::get('companies/customers','CompaniesController@customers')->name('companies.customers');
+Route::resource('companies','CompaniesController');
+
+Route::resource('companies.agents','AgentsController');
