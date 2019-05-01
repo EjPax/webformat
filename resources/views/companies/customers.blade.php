@@ -12,18 +12,7 @@
                 @foreach ($companies as $company)
                     <div class="list-group-item">
                         <a href="{{ action('CompaniesController@show',$company->id) }}">{{ $company->name }}</a> 
-                        <span class="label @if($company->type == 'supplier') label-info @else  label-default @endif text-uppercase pull-right">{{ $company->type }}</span>
-                        <!--
-                            <span>{{ $company->name }}</span><span>{{ $company->type }}</span>
-                            <a class="btn btn-default btn-sm" role="button" href="{{ action('CompaniesController@edit',$company->id) }}">edit</a> 
-                            <form action="{{ action('CompaniesController@destroy',$company->id) }}" method="POST" role="form" class="form-inline">
-                                @csrf
-                                @method('delete')
-                                <div class="form-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
-                                </div>
-                            </form>
-                        -->
+                        <span class="label label-default text-uppercase pull-right">{{ $company->type->name }}</span>
                     </div>
                 @endforeach
             </ul>    

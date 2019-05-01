@@ -161,11 +161,11 @@ class CompaniesController extends Controller
 
     public function suppliers() {
 
-    return view('companies.suppliers')->with('companies',[]/*Company::where('type','supplier')->get()*/);
+    return view('companies.suppliers')->with( 'companies',Company::all()->where('type.id','1') );
     }
 
     public function customers() {
 
-    return view('companies.customers')->with('companies',[]/*Company::where('type','customer')->get()*/);
+    return view('companies.customers')->with('companies',Company::all()->where('type.id','2'));
     }
 }
