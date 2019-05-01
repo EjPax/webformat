@@ -17,49 +17,49 @@
             </div>
 
             
-            <div class="form-group @if ($errors->has('agent_first_name')) has-error @endif">
-                <label for="agent_first_name" class="control-label">First Name <sup class="text-danger">*</sup></label>
-            <input type="text" name="agent_first_name" id="agent_first_name" class="form-control" value="{{ $first_name }}" title="">
-            @if($errors->has('agent_first_name'))
-                <span class="help-block">{{ $errors->first('agent_first_name') }}</span>
+            <div class="form-group @if ($errors->has('first_name')) has-error @endif">
+                <label for="first_name" class="control-label">First Name <sup class="text-danger">*</sup></label>
+            <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $first_name }}" title="">
+            @if($errors->has('first_name'))
+                <span class="help-block">{{ $errors->first('first_name') }}</span>
             @endif
             </div>
 
             
-            <div class="form-group @if ($errors->has('agent_last_name')) has-error @endif">
-                <label for="agent_last_name" class="control-label">Last Name <sup class="text-danger">*</sup></label>
-                <input type="text" name="agent_last_name" id="agent_last_name" class="form-control" value="{{ $last_name }}" title="">
-                @if($errors->has('agent_last_name'))
-                    <span class="help-block">{{ $errors->first('agent_last_name') }}</span>
+            <div class="form-group @if ($errors->has('last_name')) has-error @endif">
+                <label for="last_name" class="control-label">Last Name <sup class="text-danger">*</sup></label>
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $last_name }}" title="">
+                @if($errors->has('last_name'))
+                    <span class="help-block">{{ $errors->first('last_name') }}</span>
                 @endif
             </div>
 
-            <div class="form-group @if ($errors->has('agent_phone')) has-error @endif">
-                <label for="agent_phone" class="control-label">Phone</label>
-                <input type="text" name="agent_phone" id="agent_phone" class="form-control" value="{{ $phone }}" title="">
-                @if($errors->has('agent_phone'))
-                    <span class="help-block">{{ $errors->first('agent_phone') }}</span>
+            <div class="form-group @if ($errors->has('phone')) has-error @endif">
+                <label for="phone" class="control-label">Phone</label>
+                <input type="text" name="phone" id="phone" class="form-control" value="{{ $phone }}" title="">
+                @if($errors->has('phone'))
+                    <span class="help-block">{{ $errors->first('phone') }}</span>
                 @endif
             </div>
 
-            <div class="form-group @if ($errors->has('agent_mail')) has-error @endif">
-                <label for="agent_mail" class="control-label">E-Mail</label>
-                <input type="text" name="agent_mail" id="agent_mail" class="form-control" value="{{ $email }}" title="">
-                @if($errors->has('agent_mail'))
-                    <span class="help-block">{{ $errors->first('agent_mail') }}</span>
+            <div class="form-group @if ($errors->has('mail')) has-error @endif">
+                <label for="mail" class="control-label">E-Mail</label>
+                <input type="text" name="mail" id="mail" class="form-control" value="{{ $email }}" title="">
+                @if($errors->has('mail'))
+                    <span class="help-block">{{ $errors->first('mail') }}</span>
                 @endif
             </div>
             
             <div class="form-group">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="agent_active" id="input" value="1" @if($active) checked="checked" @endif>
+                        <input type="radio" name="active" id="input" value="1" @if($active) checked="checked" @endif>
                         <span>Active</span>
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="agent_active" id="input" value="0" @if(!$active) checked="checked" @endif>
+                        <input type="radio" name="active" id="input" value="0" @if(!$active) checked="checked" @endif>
                         <span>Not Active</span>
                     </label>
                 </div>            
