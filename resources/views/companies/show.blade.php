@@ -54,7 +54,7 @@
             </address>
         @endisset
         
-        <p>{{ $type }} since {{ $since }}</p>
+        <p>{{ $type['name'] }} since {{ $since }}</p>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <a class="btn btn-primary btn-block" role="button" href="{{ action('CompaniesController@edit',$id) }}"> Edit </a> 

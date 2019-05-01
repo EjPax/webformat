@@ -20,7 +20,7 @@
                 @foreach ($companies as $company)
                     <div class="list-group-item">
                         <a href="{{ action('CompaniesController@show',$company->id) }}">{{ $company->name }}</a> 
-                        <span class="label @if($company->type == 'supplier') label-info @else  label-default @endif text-uppercase pull-right">{{ $company->type }}</span>
+                        <span class="label @if($company->type->id == 1) label-info @else  label-default @endif text-uppercase pull-right">{{ $company->type->name }}</span>
                     </div>
                 @endforeach
             </ul>

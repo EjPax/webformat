@@ -35,8 +35,9 @@
                 <div class="col-lg-10">
                     <select name="type" id="type" class="form-control">
                         <option value=""></option>
-                        <option value="supplier" @if(old('type') == 'supplier') selected="selected" @endif>Supplier</option>
-                        <option value="customer" @if(old('type') == 'customer') selected="selected" @endif>Customer</option>
+                        @foreach ($company_types as $type)
+                            <option value="{{$type->id}}" @if(old('type') == $type->id) selected="selected" @endif>{{$type->name}}</option>
+                        @endforeach
                     </select>
                     @if($errors->has('type'))
                         <span class="help-block">{{ $errors->first('type') }}</span>
