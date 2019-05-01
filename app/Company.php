@@ -15,11 +15,17 @@ class Company extends Model
         'address' => 'Viale della Vittoria 13'
     ];
 
-    // this property allows 
-    protected $with = ['agents'];
+    protected $hidden = ['type_id'];
 
-    // accessor methods listed in following array will be appended to the JSON serialization
+    // methods listed in 'with' array property will be called at init
+    protected $with = ['type','agents'];
+
+    // accessor methods listed in 'append' array property will be appended to the JSON serialization
     protected $appends = ['since'];
+
+    public function type() {
+        return $this->hasOne('App\CompanyType','id','company_types_id');
+    }
 
     // define relationship with 'agent' entities
     public function agents() {
@@ -27,7 +33,11 @@ class Company extends Model
         return $this->hasMany('App\Agent');
     }
 
-    // setters and getters
+    // setters and getters (accessor and mutuators)
+    /**
+     * Set 'website' property with http:// prefix
+     *  @param string $value 
+     */
     public function setWebsiteAttribute($value){
 
         if ($value)
@@ -38,7 +48,11 @@ class Company extends Model
         
     }
 
-    // custom accessor to retrieve 
+    /**
+     * Return 'since' property from audit 'creation' date 
+     *
+     * @return string
+     */
     public function getSinceAttribute() {
 
         return $this->created_at->format('M Y');

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Company;
+use App\CompanyType;
+use Illuminate\Validation\Rule;
 
 class CompaniesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the companies.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,18 +22,20 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new company.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-
-        return view('companies.create');
+        $data = [
+            'company_types' => CompanyType::all()
+        ];
+        return view('companies.create',$data);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created company in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -45,7 +49,7 @@ class CompaniesController extends Controller
         
         $company = new Company();
         $company->name = $request->input('name');
-        $company->type = $request->input('type');
+        $company->type_id = $request->input('type');
         $company->address = $request->input('address');
         $company->city = $request->input('city');
         $company->zip = $request->input('zip');
@@ -61,7 +65,7 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified company.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -73,7 +77,7 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified company.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -85,7 +89,7 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified company in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -95,9 +99,11 @@ class CompaniesController extends Controller
     {
         $this->validation($request);
 
+        // if validation success
+
         $company = Company::find($id);
         $company->name = $request->input('name');
-        $company->type = $request->input('type');
+        $company->type_id = $request->input('type');
         $company->address = $request->input('address');
         $company->city = $request->input('city');
         $company->zip = $request->input('zip');
@@ -112,7 +118,7 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified company from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -129,10 +135,10 @@ class CompaniesController extends Controller
 
     public function validation(Request $request) {
         
-        // set validation ruleas foreach attribute
+        // set validation rules foreach property
         $validationRules = [
             'name' => 'required|min:3|max:20',
-            'type' => 'required',
+            'type' => ['required',Rule::in(CompanyType::all()->keys())],
             'address' => 'nullable|max:30',
             'city' => 'nullable|max:20',
             'zip' => 'nullable|numeric',
@@ -155,11 +161,11 @@ class CompaniesController extends Controller
 
     public function suppliers() {
 
-        return view('companies.suppliers')->with('companies',Company::where('type','supplier')->get());
+    return view('companies.suppliers')->with('companies',[]/*Company::where('type','supplier')->get()*/);
     }
 
     public function customers() {
 
-        return view('companies.customers')->with('companies',Company::where('type','customer')->get());
+    return view('companies.customers')->with('companies',[]/*Company::where('type','customer')->get()*/);
     }
 }

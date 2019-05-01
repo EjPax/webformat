@@ -5,21 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Agent;
 use App\Company;
+use Validator;
 
 class AgentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the agents for a specific company.
      *
      * @return \Illuminate\Http\Response
      */
     public function index($companyId)
     {
-        return Agent::where('company_id',$companyId)->get();
+        // not supported
+        /*
+        $agents = Agent::where('company_id',$companyId)->get();
+        return $agents;
+        */
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new agent for a specific company.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,53 +34,46 @@ class AgentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created agents in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $companyId
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$companyId)
     {
         if ( Company::find($companyId) ) {
-
-            $this->validate($request,
-                [
-                    'agent_first_name' => 'required',
-                    'agent_last_name' => 'required',
-                    //'agent_phone' => 'numeric',
-                    //'agent_mail' => 'email'
-                ]);
-
+            
+            $this->validation($request);
+            
             $agent = new Agent();
-
-            $agent->first_name = $request->input('agent_first_name');
-            $agent->last_name = $request->input('agent_last_name');
-            $agent->phone = $request->input('agent_phone');
-            $agent->email = $request->input('agent_mail');
-            $agent->active = $request->input('agent_active');
+            $agent->first_name = $request->input('first_name');
+            $agent->last_name = $request->input('last_name');
+            $agent->phone = $request->input('phone');
+            $agent->email = $request->input('email');
+            $agent->active = $request->input('active');
             $agent->company_id = $companyId;
 
             $agent->save();
 
-            
             return redirect( action('CompaniesController@show',$companyId) );
         }
 
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified agents.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return Agent::find($id);
+        // not supported
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified agents.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -83,12 +81,11 @@ class AgentsController extends Controller
     public function edit($companyId,$id)
     {
         $agent = Agent::find($id);
-        
         return view('agents.edit',$agent);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified agents in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -100,19 +97,15 @@ class AgentsController extends Controller
 
         if ( $agent->company ) {
 
-            $this->validate($request,
-                [
-                    'agent_first_name' => 'required|max:20',
-                    'agent_last_name' => 'required|max:20',
-                    //'agent_phone' => 'numeric',
-                    'agent_mail' => 'sometimes|email|max:20'
-                ]);
+            $this->validation($request);
+            
+            // if validation success...
 
-            $agent->first_name = $request->input('agent_first_name');
-            $agent->last_name = $request->input('agent_last_name');
-            $agent->phone = $request->input('agent_phone');
-            $agent->email = $request->input('agent_mail');
-            $agent->active = $request->input('agent_active');
+            $agent->first_name = $request->input('first_name');
+            $agent->last_name = $request->input('last_name');
+            $agent->phone = $request->input('phone');
+            $agent->email = $request->input('email');
+            $agent->active = $request->input('active');
             
             $agent->save();
 
@@ -122,7 +115,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified agents from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -130,6 +123,26 @@ class AgentsController extends Controller
     public function destroy($companyId,$id)
     {
         Agent::find($id)->delete();
+        
         return redirect( action('CompaniesController@show',$companyId) );
+    }
+
+    public function validation(Request $request) {
+        
+        // set validation ruleas foreach attribute
+        $validationRules = [
+            'first_name' => 'required|max:20',
+            'last_name' => 'required|max:20',
+            'phone' => 'nullable|numeric',
+            'email' => 'nullable|email|max:20',
+            'active' => 'boolean'
+        ];
+
+        // set custom error message
+        $messages = [];
+
+        // validate using 'Validator' instance
+        return Validator::make($request->all(),$validationRules,$messages)->validate();
+
     }
 }
