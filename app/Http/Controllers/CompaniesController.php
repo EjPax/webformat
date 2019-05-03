@@ -49,7 +49,7 @@ class CompaniesController extends Controller
         
         $company = new Company();
         $company->name = $request->input('name');
-        $company->type_id = $request->input('type');
+        $company->company_types_id = $request->input('type');
         $company->address = $request->input('address');
         $company->city = $request->input('city');
         $company->zip = $request->input('zip');
@@ -84,8 +84,12 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $company = Company::find($id);
-        return view('companies.edit',$company);
+        $data = [
+            'company_types' => CompanyType::all(),
+            'company' => Company::find($id)
+        ];
+        
+        return view('companies.edit',$data);
     }
 
     /**
@@ -103,7 +107,7 @@ class CompaniesController extends Controller
 
         $company = Company::find($id);
         $company->name = $request->input('name');
-        $company->type_id = $request->input('type');
+        $company->company_types_id = $request->input('type');
         $company->address = $request->input('address');
         $company->city = $request->input('city');
         $company->zip = $request->input('zip');
@@ -138,7 +142,7 @@ class CompaniesController extends Controller
         // set validation rules foreach property
         $validationRules = [
             'name' => 'required|min:3|max:20',
-            'type' => ['required',Rule::in(CompanyType::all()->keys())],
+            'type' => ['required',Rule::in(CompanyType::all()->modelKeys()) ],
             'address' => 'nullable|max:30',
             'city' => 'nullable|max:20',
             'zip' => 'nullable|numeric',
@@ -161,11 +165,13 @@ class CompaniesController extends Controller
 
     public function suppliers() {
 
-    return view('companies.suppliers')->with( 'companies',Company::all()->where('type.id','1') );
+        return view('companies.suppliers')->with( 'companies',Company::all()->where('type.id','1') );
+    
     }
 
     public function customers() {
 
-    return view('companies.customers')->with('companies',Company::all()->where('type.id','2'));
+        return view('companies.customers')->with('companies',Company::all()->where('type.id','2'));
+    
     }
 }
