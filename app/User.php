@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function favourites_companies() {
+
+        return $this->morphedByMany('App\Company','favourite');
+    }
+
+    public function favourites_agents() {
+
+        return $this->morphedByMany('App\Agent','favourite');
+    }
 }

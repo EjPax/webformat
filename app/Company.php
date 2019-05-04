@@ -33,6 +33,12 @@ class Company extends Model
         return $this->hasMany('App\Agent');
     }
 
+    public function favourite_of() {
+
+        return $this->morphToMany('App\User','favourite');
+
+    }
+
     // setters and getters (accessor and mutuators)
     /**
      * Set 'website' property with http:// prefix
@@ -56,5 +62,8 @@ class Company extends Model
     public function getSinceAttribute() {
 
         return $this->created_at->format('M Y');
+    
     }
+
+
 }
