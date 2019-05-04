@@ -22,9 +22,9 @@
                     <span>{{ $address }}</span><br/>
                 @endisset
                 
-                @isset($city)
+                @if( ($city || $zip) )
                     <span>{{ $zip }}</span> <span>{{ $city }}</span><br/>
-                @endisset
+                @endif
                 
                 @isset($country)
                     <span>{{ $country }}</span><br/>
@@ -84,8 +84,6 @@
                             <th>Phone Nr.</th>
                             <th>E-Mail</th>
                             <th>Status</th>
-                            <th>From</th>
-                            <th>To</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -100,8 +98,6 @@
                             <td>{{ $agent['phone']  }}</td>
                             <td>{{ $agent['email']  }}</td>
                             <td>@if($agent['active']) <span class="badge">Active</span> @else <span class="badge">Not Active</span> @endif</td>
-                            <td>{{ $agent['from_date']  }}</td>
-                            <td>{{ $agent['to_date']  }}</td>
                             <td>
                                 <a class="btn btn-default btn-xs" href="{{ action('AgentsController@edit',[$id,$agent['id']]) }}" role="button">edit</a>
                             </td>
@@ -117,7 +113,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="9">
+                            <td colspan="7">
                             </td>
                         </tr>
                     </tfoot>
