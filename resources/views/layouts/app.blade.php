@@ -19,10 +19,10 @@
     </head>
     <body>
         <div class="navbar navbar-default">
-            <a class="navbar-brand" href="/">{{ env('APP_NAME') }}</a>
+            <a class="navbar-brand" href="{{ env('APP_URL') }}">{{ env('APP_NAME') }}</a>
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/">Home</a>
+                    <a href="{{ action('CompaniesController@index') }}">Home</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Companies <span class="caret"></span></a>
@@ -35,10 +35,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="/about">About</a>
+                    <a href="{{ action('StaticPagesController@about')}}">About</a>
                 </li>
                 <li>
-                    <a href="/credits">Credits</a>
+                    <a href="{{ action('StaticPagesController@credits')}}">Credits</a>
                 </li>
             </ul>
         </div>
