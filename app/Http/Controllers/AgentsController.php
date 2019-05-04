@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Agent;
 use App\Company;
+use App\Area;
 use Validator;
 
 class AgentsController extends Controller
@@ -30,7 +31,11 @@ class AgentsController extends Controller
      */
     public function create($companyId)
     {
-        return view('agents.create')->with('parentId',$companyId);
+        $data = [
+            'parentId' => $companyId,
+            'areas' => Area::all()
+        ];
+        return view('agents.create',$data);
     }
 
     /**
@@ -56,6 +61,11 @@ class AgentsController extends Controller
 
             $agent->save();
 
+            foreach ($request->input('area') as $areaInput) {
+                if (Area::find($areaInput))
+                    $agent->areas()->attach( $areaInput );
+            }
+            
             return redirect( action('CompaniesController@show',$companyId) );
         }
 
@@ -81,6 +91,10 @@ class AgentsController extends Controller
     public function edit($companyId,$id)
     {
         $agent = Agent::find($id);
+        $agent->areaCodes = Area::all();
+        foreach ($agent->areas as $key => $value) {
+            $agent->areaCodes->find($value->id)->checked = true;
+        }
         return view('agents.edit',$agent);
     }
 
@@ -109,6 +123,11 @@ class AgentsController extends Controller
             
             $agent->save();
 
+            $agent->areas()->detach();
+            foreach ($request->input('area') as $areaInput) {
+                if (Area::find($areaInput))
+                    $agent->areas()->save( Area::find($areaInput) );
+            }
             
             return redirect( action('CompaniesController@show',$agent->company_id) );
         }
@@ -122,6 +141,7 @@ class AgentsController extends Controller
      */
     public function destroy($companyId,$id)
     {
+        Agent::find($id)->areas()->delete();
         Agent::find($id)->delete();
         
         return redirect( action('CompaniesController@show',$companyId) );
