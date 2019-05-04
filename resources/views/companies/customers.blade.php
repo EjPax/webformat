@@ -5,6 +5,7 @@
 @section('content')
     <h1>Customers List</h1>
     <p>this is a list of all customers companies stored in our system.</p>
+    <p>Click on a customer's name to see details</p>
     @isset($companies)
         
         @if (count($companies))
