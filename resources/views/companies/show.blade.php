@@ -84,6 +84,7 @@
                             <th>Phone Nr.</th>
                             <th>E-Mail</th>
                             <th>Status</th>
+                            <th>Areas</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -98,6 +99,11 @@
                             <td>{{ $agent['phone']  }}</td>
                             <td>{{ $agent['email']  }}</td>
                             <td>@if($agent['active']) <span class="badge">Active</span> @else <span class="badge">Not Active</span> @endif</td>
+                            <td>
+                                    @foreach ($agent['areas'] as $item)
+                                        {{ $item['name'] }}
+                                    @endforeach
+                            </td>
                             <td>
                                 <a class="btn btn-default btn-xs" href="{{ action('AgentsController@edit',[$id,$agent['id']]) }}" role="button">edit</a>
                             </td>

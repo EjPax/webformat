@@ -66,18 +66,19 @@
             </div>
                 
                 
-            <div class="form-group @if ($errors->has('company_type')) has-error @endif">
-                <label for="company_type" class="control-label">Type:</label>
-                <select name="company_type" id="company_type" class="form-control">
-                    <option value=""></option>
-                    <option value="supplier" @if(old('company_type') == 'supplier') selected="selected" @endif>Supplier</option>
-                    <option value="customer" @if(old('company_type') == 'customer') selected="selected" @endif>Customer</option>
-                </select>
-            
-                @if($errors->has('company_type'))
-                    <span class="help-block">{{ $errors->first('company_type') }}</span>
-                @endif
+            <div class="form-inline">
+                @foreach ($areaCodes as $areaInput)
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input name="area[]" type="checkbox" value="{{ $areaInput['id'] }}" @if($areaInput['checked']) checked="checked" @endif> <span>{{ $areaInput['name'] }}</span>
+                            </label>
+                        </div>
+                    </div>    
+                @endforeach
             </div>
+
+            
             
             
 

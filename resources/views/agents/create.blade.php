@@ -70,6 +70,19 @@
                 </div>            
             </div>
             
+
+            <div class="form-inline">
+                @foreach ($areas as $area)
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input name="area[]" type="checkbox" value="{{ $area->id }}"> <span>{{ $area->name }}</span>
+                            </label>
+                        </div>
+                    </div>    
+                @endforeach
+            </div>
+
             <div class="form-group">
                 <div class="row">
                     
