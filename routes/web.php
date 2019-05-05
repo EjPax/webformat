@@ -18,6 +18,10 @@ Route::get('/', function () {
 
 Route::get('companies/suppliers','CompaniesController@suppliers')->name('companies.suppliers');
 Route::get('companies/customers','CompaniesController@customers')->name('companies.customers');
+
 Route::resource('companies','CompaniesController');
 
 Route::resource('companies.agents','AgentsController');
+
+Route::get('about','StaticPagesController@about')->name('about');
+Route::get('credits','StaticPagesController@credits')->name('credits');
