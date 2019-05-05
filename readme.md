@@ -1,4 +1,1 @@
-    <h1>Welcome to {{ env('APP_NAME') }} App</h1>
-    <p>This is a simple address book app built to manage companies.</p>
-    <p>Companies are divided into <strong>customers</strong> and <strong>suppliers</strong>.</p>
-    <p>Foreach company you can also define a set of <strong>agents</strong>.</p>
+This is a test project built for WebFormat on http://ejpax.homepc.it/webformat/
